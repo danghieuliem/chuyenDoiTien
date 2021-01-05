@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <p>Form</p>
+        <input type="number" id="input">
+        <select class="form-select" aria-label="Default select example" id="type_input">
+        </select>
+        <br>
+        <p>To</p>
+        <input type="number" id="output">
+        <select class="form-select" aria-label="Default select example" id="type_output">
+        </select>
+        <br>
+        <button id="btn_changer">Change</button>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="./js/main.js"></script>
+
+    <script>
+        $(document).ready(async() => {
+            console.log("element")
+            await $.ajax({
+                method: "GET",
+                url: "http://localhost:3000/api/money",
+                dataType: "json",
+                data: null,
+                success: (data) => {
+                    var first = true;
+                    data.forEach(element => {
+                        //console.log(element)
+                        if (first) {
+                            document.getElementById("type_output").innerHTML += `<option value="${element.cc}" selected">{${element.symbol}} ${element.cc} : ${element.name}</option>`;
+                            document.getElementById("type_input").innerHTML += `<option value="${element.cc}" selected">{${element.symbol}} ${element.cc} : ${element.name}</option>`;
+
+                        } else {
+                            document.getElementById("type_output").innerHTML += `<option value="${element.cc}">{${element.symbol}} ${element.cc} : ${element.name}</option>`;
+                            document.getElementById("type_input").innerHTML += `<option value="${element.cc}">{${element.symbol}} ${element.cc} : ${element.name}</option>`;
+                        }
+                    });
+                }
+            });
+            document.getElementById("btn_changer").onclick = function(e) {
+                var data = {
+                    money: {
+                        name: document.getElementById("type_input").value,
+                        value: document.getElementById("input").value
+                    },
+                    typeChange: document.getElementById("type_output").value,
+                }
+                console.log(data);
+                $.ajax({
+                    url: "http://localhost:3000/api/money",
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    data: JSON.stringify(data),
+                    success: (data) => {
+                        console.log(data);
+                        document.getElementById("output").value = data;
+                        var local = window.localStorage;
+                        var data_history = {
+                            from: {
+                                name: document.getElementById("type_input").value,
+                                value: document.getElementById("input").value
+                            },
+                            to: {
+                                name: document.getElementById("type_output").value,
+                                value: document.getElementById("output").value
+                            }
+                        }
+                        local.setItem("data_history", JSON.stringify(data_history));
+                    }
+                });
+
+            };
+            const data_history = JSON.parse(window.localStorage.getItem("data_history"));
+
+            console.log(data_history);
+            document.getElementById("type_input").value = data_history.from.name;
+            document.getElementById("input").value = data_history.from.value;
+            document.getElementById("type_output").value = data_history.to.name;
+            document.getElementById("output").value = data_history.to.value;
+
+        });
+    </script>
+</body>
+
+</html>
