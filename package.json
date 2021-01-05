@@ -1,25 +1,25 @@
 {
-    "name": "chuyendoitien",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "start": "node .\\src\\main.js "
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/danghieuliem/chuyenDoiTien.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/danghieuliem/chuyenDoiTien/issues"
-    },
-    "homepage": "https://github.com/danghieuliem/chuyenDoiTien#readme",
-    "dependencies": {
-        "express": "^4.17.1",
-        "fs": "0.0.1-security",
-        "path": "^0.12.7",
-        "request": "^2.88.2"
-    }
+  "name": "chuyendoitien",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .\\src\\main.js "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danghieuliem/chuyenDoiTien.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danghieuliem/chuyenDoiTien/issues"
+  },
+  "homepage": "https://github.com/danghieuliem/chuyenDoiTien#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
+    "request": "^2.88.2"
+  }
 }
