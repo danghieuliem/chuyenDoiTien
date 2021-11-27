@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const Money = require("../service/money-service");
+const Money = require("../Service/money-service");
 
 const moneyRouter = Router({ mergeParams: true });
 
